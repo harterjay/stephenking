@@ -4,32 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stephen King Complete Bibliography</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Crimson Text', 'Georgia', 'Times New Roman', serif;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e8e8e8;
             min-height: 100vh;
         }
         
         .container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(40, 40, 40, 0.9);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(200, 50, 50, 0.2);
         }
         
         h1 {
             text-align: center;
             margin-bottom: 10px;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: #c9302c;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
         
         .subtitle {
@@ -63,7 +67,7 @@
             font-size: 2em;
             font-weight: bold;
             display: block;
-            color: #4ecdc4;
+            color: #c9302c;
         }
         
         .stat-label {
@@ -92,9 +96,9 @@
         }
         
         .filter-btn:hover, .filter-btn.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: #4ecdc4;
-            color: #4ecdc4;
+            background: rgba(200, 50, 50, 0.2);
+            border-color: #c9302c;
+            color: #c9302c;
         }
         
         .book-grid {
@@ -106,12 +110,13 @@
             overflow-y: auto;
             overflow-x: visible;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
         }
         
         .book-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(50, 50, 50, 0.8);
             border-radius: 10px;
             padding: 15px;
             transition: all 0.3s ease;
@@ -119,21 +124,23 @@
             position: relative;
             cursor: pointer;
             overflow: visible;
+            border: 1px solid rgba(100, 100, 100, 0.3);
         }
 
         .book-card:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(200, 50, 50, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(200, 50, 50, 0.4);
         }
 
         .book-tooltip {
             position: fixed;
-            background: rgba(0, 0, 0, 0.95);
-            color: white;
+            background: rgba(30, 30, 30, 0.95);
+            color: #e8e8e8;
             padding: 15px;
             border-radius: 8px;
-            border: 2px solid #4ecdc4;
+            border: 1px solid #c9302c;
             max-width: 350px;
             font-size: 14px;
             line-height: 1.4;
@@ -151,7 +158,7 @@
         .tooltip-title {
             font-weight: bold;
             margin-bottom: 8px;
-            color: #4ecdc4;
+            color: #c9302c;
         }
 
         .tooltip-plot {
@@ -161,7 +168,7 @@
         .tooltip-facts {
             font-size: 12px;
             opacity: 0.9;
-            border-top: 1px solid rgba(78, 205, 196, 0.3);
+            border-top: 1px solid rgba(220, 20, 60, 0.3);
             padding-top: 8px;
         }
         
@@ -192,13 +199,25 @@
             font-size: 0.8em;
         }
         
+        .book-ranking {
+            background: #c9302c;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
         .download-section {
             text-align: center;
             margin: 30px 0;
         }
         
         .download-btn {
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            background: linear-gradient(45deg, #a94442, #c9302c);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -206,7 +225,7 @@
             font-size: 1.1em;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -247,7 +266,46 @@
         
         .search-box:focus {
             outline: none;
-            border-color: #4ecdc4;
+            border-color: #c9302c;
+        }
+        
+        .search-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .game-btn {
+            background: linear-gradient(45deg, #a94442, #c9302c);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        @media (max-width: 600px) {
+            .search-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
         }
         
         /* Scrollbar styles */
@@ -279,7 +337,12 @@
             <!-- Stats will be populated by JavaScript -->
         </div>
         
-        <input type="text" id="searchBox" class="search-box" placeholder="Search books by title...">
+        <div class="search-controls">
+            <input type="text" id="searchBox" class="search-box" placeholder="Search books by title...">
+            <button class="game-btn" onclick="window.location.href='game.html'">
+                🎮 Ranking Game
+            </button>
+        </div>
         
         <div class="filters">
             <button class="filter-btn active" data-filter="all">All Books</button>
@@ -313,268 +376,251 @@
         // Complete Stephen King bibliography with hover information
         const stephenKingBooks = [
             // Novels
-            { Title: "Carrie", Type: "Novel", Date: "April 5, 1974", Category: "novel", Year: 1974, 
+            { Title: "Carrie", Type: "Novel", Date: "April 5, 1974", Category: "novel", Year: 1974, Ranking: 33, 
               Plot: "A telekinetic teenager faces high school bullying and religious extremism, leading to a devastating prom night.", 
               Facts: "King's debut novel • Adapted into multiple films • Almost discarded by King but rescued by his wife Tabitha" },
-            { Title: "'Salem's Lot", Type: "Novel", Date: "October 17, 1975", Category: "novel", Year: 1975,
+            { Title: "'Salem's Lot", Type: "Novel", Date: "October 17, 1975", Category: "novel", Year: 1975, Ranking: 18,
               Plot: "Vampires invade a small Maine town, turning residents into undead creatures.",
               Facts: "King's second novel • Inspired by Bram Stoker's Dracula • Set in fictional Jerusalem's Lot, Maine" },
-            { Title: "The Shining", Type: "Novel", Date: "January 1977", Category: "novel", Year: 1977,
+            { Title: "The Shining", Type: "Novel", Date: "January 1977", Category: "novel", Year: 1977, Ranking: 5,
               Plot: "A family becomes winter caretakers of an isolated hotel where supernatural forces drive the father toward madness.",
               Facts: "Inspired by King's stay at The Stanley Hotel • Famously adapted by Stanley Kubrick • King wrote the screenplay for 1997 miniseries" },
-            { Title: "The Stand", Type: "Novel", Date: "October 1978", Category: "novel", Year: 1978,
+            { Title: "The Stand", Type: "Novel", Date: "October 1978", Category: "novel", Year: 1978, Ranking: 2,
               Plot: "After a plague wipes out most of humanity, survivors gather to face a final battle between good and evil.",
               Facts: "Originally 823 pages, expanded to 1,152 in 1990 • King considers it his 'Lord of the Rings' • Features over 1000 characters" },
-            { Title: "The Dead Zone", Type: "Novel", Date: "August 1979", Category: "novel", Year: 1979,
+            { Title: "The Dead Zone", Type: "Novel", Date: "August 1979", Category: "novel", Year: 1979, Ranking: 35,
               Plot: "A man awakens from a coma with psychic abilities that allow him to see the future through touch.",
               Facts: "First King novel to be planned from start to finish • Adapted into film (1983) and TV series • Explores themes of power and responsibility" },
-            { Title: "Firestarter", Type: "Novel", Date: "September 29, 1980", Category: "novel", Year: 1980,
+            { Title: "Firestarter", Type: "Novel", Date: "September 29, 1980", Category: "novel", Year: 1980, Ranking: 47,
               Plot: "A young girl with pyrokinetic abilities is hunted by a government agency that wants to weaponize her powers.",
               Facts: "Serialized in Omni magazine • Drew Barrymore starred in 1984 film adaptation • King's critique of government overreach" },
-            { Title: "Cujo", Type: "Novel", Date: "September 8, 1981", Category: "novel", Year: 1981,
+            { Title: "Cujo", Type: "Novel", Date: "September 8, 1981", Category: "novel", Year: 1981, Ranking: 22,
               Plot: "A rabid St. Bernard traps a mother and son in their car during a sweltering summer.",
               Facts: "King was so affected by cocaine addiction he doesn't remember writing it • One of his most claustrophobic novels • No supernatural elements" },
-            { Title: "Christine", Type: "Novel", Date: "April 29, 1983", Category: "novel", Year: 1983,
+            { Title: "Christine", Type: "Novel", Date: "April 29, 1983", Category: "novel", Year: 1983, Ranking: 63,
               Plot: "A 1958 Plymouth Fury develops a murderous obsession with its teenage owner.",
               Facts: "Explores teenage alienation and toxic relationships • John Carpenter directed the 1983 film • King's commentary on American car culture" },
-            { Title: "Pet Sematary", Type: "Novel", Date: "November 1983", Category: "novel", Year: 1983,
+            { Title: "Pet Sematary", Type: "Novel", Date: "November 1983", Category: "novel", Year: 1983, Ranking: 27,
               Plot: "A family discovers an ancient burial ground where the dead return to life, but they come back wrong.",
               Facts: "King considered it too frightening to publish • Inspired by a real pet cemetery near King's home • Explores grief and letting go" },
-            { Title: "The Talisman", Type: "Novel", Date: "November 1984", Category: "novel", Year: 1984,
+            { Title: "The Talisman", Type: "Novel", Date: "November 1984", Category: "novel", Year: 1984, Ranking: 7,
               Plot: "A 12-year-old boy journeys across America and a parallel world to save his dying mother.",
               Facts: "Co-written with Peter Straub • Combines fantasy and horror • Sequel 'Black House' published in 2001" },
-            { Title: "IT", Type: "Novel", Date: "September 1986", Category: "novel", Year: 1986,
+            { Title: "IT", Type: "Novel", Date: "September 1986", Category: "novel", Year: 1986, Ranking: 1,
               Plot: "Seven children face an ancient evil that preys on the town of Derry every 27 years.",
               Facts: "One of King's longest novels at 1,138 pages • Explores childhood trauma and memory • Highly successful 2017/2019 film adaptations" },
-            { Title: "The Eyes of the Dragon", Type: "Novel", Date: "February 1987", Category: "novel", Year: 1987,
+            { Title: "The Eyes of the Dragon", Type: "Novel", Date: "February 1987", Category: "novel", Year: 1987, Ranking: 55,
               Plot: "A young prince must escape from prison to reclaim his throne in a medieval fantasy setting.",
               Facts: "King's first pure fantasy novel • Written for his children • Set in the same universe as The Dark Tower" },
-            { Title: "Misery", Type: "Novel", Date: "June 1987", Category: "novel", Year: 1987,
+            { Title: "Misery", Type: "Novel", Date: "June 1987", Category: "novel", Year: 1987, Ranking: 6,
               Plot: "A writer is held captive by his 'number one fan' who forces him to write a novel to her specifications.",
               Facts: "King's allegory for his own addiction struggles • Kathy Bates won Oscar for 1990 film adaptation • Explores the relationship between writers and readers" },
-            { Title: "The Tommyknockers", Type: "Novel", Date: "November 1987", Category: "novel", Year: 1987,
+            { Title: "The Tommyknockers", Type: "Novel", Date: "November 1987", Category: "novel", Year: 1987, Ranking: 60,
               Plot: "Residents of a small town are transformed by an alien presence buried in the forest.",
               Facts: "King wrote this during peak cocaine addiction • He considers it one of his worst books • Explores themes of technology and addiction" },
-            { Title: "The Dark Half", Type: "Novel", Date: "November 1989", Category: "novel", Year: 1989,
+            { Title: "The Dark Half", Type: "Novel", Date: "November 1989", Category: "novel", Year: 1989, Ranking: 42,
               Plot: "A writer's violent pseudonym comes to life and begins killing people who threaten to expose the secret.",
               Facts: "Inspired by King's own experience writing as Richard Bachman • Explores duality and artistic identity • Features real sparrows in climactic scene" },
-            { Title: "Needful Things", Type: "Novel", Date: "October 1991", Category: "novel", Year: 1991,
+            { Title: "Needful Things", Type: "Novel", Date: "October 1991", Category: "novel", Year: 1991, Ranking: 29,
               Plot: "A mysterious shop owner grants people's deepest desires in exchange for small favors that turn the town against itself.",
               Facts: "Billed as 'The Last Castle Rock Story' • Explores greed and human weakness • Features characters from previous King novels" },
-            { Title: "Gerald's Game", Type: "Novel", Date: "May 1992", Category: "novel", Year: 1992,
+            { Title: "Gerald's Game", Type: "Novel", Date: "May 1992", Category: "novel", Year: 1992, Ranking: 38,
               Plot: "A woman becomes trapped by handcuffs during an intimate game gone wrong and must survive using only her wits.",
               Facts: "Written as a psychological thriller • One of King's most claustrophobic novels • Successful Netflix adaptation in 2017" },
-            { Title: "Dolores Claiborne", Type: "Novel", Date: "November 1993", Category: "novel", Year: 1993,
+            { Title: "Dolores Claiborne", Type: "Novel", Date: "November 1993", Category: "novel", Year: 1993, Ranking: 20,
               Plot: "A housekeeper confesses to murder while revealing the truth about her abusive marriage and her employer's death.",
               Facts: "Told entirely in first person • No chapters or section breaks • Connected to Gerald's Game through solar eclipse" },
-            { Title: "Insomnia", Type: "Novel", Date: "September 1994", Category: "novel", Year: 1994,
+            { Title: "Insomnia", Type: "Novel", Date: "September 1994", Category: "novel", Year: 1994, Ranking: 44,
               Plot: "An elderly man's chronic insomnia reveals a supernatural battle between forces of good and evil.",
               Facts: "Connects to The Dark Tower mythology • Explores aging and mortality • Features 'little bald doctors' from other dimensions" },
-            { Title: "Rose Madder", Type: "Novel", Date: "June 1995", Category: "novel", Year: 1995,
+            { Title: "Rose Madder", Type: "Novel", Date: "June 1995", Category: "novel", Year: 1995, Ranking: 37,
               Plot: "A battered wife escapes her abusive police officer husband and finds refuge through a magical painting.",
               Facts: "King's exploration of domestic violence • Blends realistic drama with fantasy elements • Features Greek mythology themes" },
-            { Title: "Bag of Bones", Type: "Novel", Date: "September 22, 1998", Category: "novel", Year: 1998,
+            { Title: "Bag of Bones", Type: "Novel", Date: "September 22, 1998", Category: "novel", Year: 1998, Ranking: 31,
               Plot: "A widowed novelist returns to his lake house where he encounters ghosts and uncovers a town's dark secrets.",
               Facts: "Won Bram Stoker Award • King's meditation on grief and loss • Features actual lyrics from blues songs" },
-            { Title: "The Girl Who Loved Tom Gordon", Type: "Novel", Date: "April 1999", Category: "novel", Year: 1999,
+            { Title: "The Girl Who Loved Tom Gordon", Type: "Novel", Date: "April 1999", Category: "novel", Year: 1999, Ranking: 40,
               Plot: "A nine-year-old girl becomes lost in the woods and imagines her baseball hero helping her survive.",
               Facts: "One of King's shortest novels • Based on real Red Sox pitcher • Explores childhood resilience and imagination" },
-            { Title: "Dreamcatcher", Type: "Novel", Date: "February 20, 2001", Category: "novel", Year: 2001,
+            { Title: "Dreamcatcher", Type: "Novel", Date: "February 20, 2001", Category: "novel", Year: 2001, Ranking: 73,
               Plot: "Four friends with psychic abilities battle an alien invasion in the Maine woods.",
               Facts: "Written while King recovered from his van accident • King admits he was heavily medicated during writing • Criticized by King himself" },
-            { Title: "Black House", Type: "Novel", Date: "September 15, 2001", Category: "novel", Year: 2001,
+            { Title: "Black House", Type: "Novel", Date: "September 15, 2001", Category: "novel", Year: 2001, Ranking: 65,
               Plot: "Retired detective Jack Sawyer returns to investigate child murders connected to The Dark Tower.",
               Facts: "Sequel to The Talisman • Co-written with Peter Straub • Bridges Dark Tower mythology with detective fiction" },
-            { Title: "From A Buick 8", Type: "Novel", Date: "September 24, 2002", Category: "novel", Year: 2002,
+            { Title: "From A Buick 8", Type: "Novel", Date: "September 24, 2002", Category: "novel", Year: 2002, Ranking: 9,
               Plot: "State troopers guard a mysterious car that serves as a portal to another dimension.",
               Facts: "Meditation on loss and growing up • Told through multiple perspectives • Features no clear resolution" },
-            { Title: "The Colorado Kid", Type: "Novel", Date: "October 2005", Category: "novel", Year: 2005,
+            { Title: "The Colorado Kid", Type: "Novel", Date: "October 2005", Category: "novel", Year: 2005, Ranking: 76,
               Plot: "Two newspapermen tell a young reporter about an unsolved mystery involving a dead man on a beach.",
               Facts: "Published by Hard Case Crime • No resolution provided • Inspired TV series Haven" },
-            { Title: "Cell", Type: "Novel", Date: "January 24, 2006", Category: "novel", Year: 2006,
+            { Title: "Cell", Type: "Novel", Date: "January 24, 2006", Category: "novel", Year: 2006, Ranking: 74,
               Plot: "A mysterious cell phone signal turns users into zombie-like creatures, sparking an apocalypse.",
               Facts: "King's take on zombie fiction • Explores technology dependence • Film adaptation starred John Cusack" },
-            { Title: "Lisey's Story", Type: "Novel", Date: "October 2006", Category: "novel", Year: 2006,
+            { Title: "Lisey's Story", Type: "Novel", Date: "October 2006", Category: "novel", Year: 2006, Ranking: 34,
               Plot: "A widow discovers her late husband's supernatural secret world while sorting through his belongings.",
               Facts: "King's personal favorite of his novels • Love letter to his wife Tabitha • Won Bram Stoker Award" },
-            { Title: "Duma Key", Type: "Novel", Date: "January 22, 2008", Category: "novel", Year: 2008,
+            { Title: "Duma Key", Type: "Novel", Date: "January 22, 2008", Category: "novel", Year: 2008, Ranking: 17,
               Plot: "An artist recovering from an accident discovers his paintings have supernatural power on a Florida island.",
               Facts: "Set in Florida instead of Maine • Explores art and healing • Features Edgar Freemantle's recovery journey" },
-            { Title: "Under the Dome", Type: "Novel", Date: "November 2009", Category: "novel", Year: 2009,
+            { Title: "Under the Dome", Type: "Novel", Date: "November 2009", Category: "novel", Year: 2009, Ranking: 19,
               Plot: "A small town becomes trapped under an invisible dome, revealing the corruption and violence within.",
               Facts: "1,072 pages long • Adapted into CBS series • Explores political corruption and environmental themes" },
-            { Title: "11/22/63", Type: "Novel", Date: "November 8, 2011", Category: "novel", Year: 2011,
+            { Title: "11/22/63", Type: "Novel", Date: "November 8, 2011", Category: "novel", Year: 2011, Ranking: 4,
               Plot: "A teacher travels back in time to prevent JFK's assassination but discovers changing history has consequences.",
               Facts: "Extensive historical research • Won LA Times Book Prize • Hulu miniseries starring James Franco" },
-            { Title: "Joyland", Type: "Novel", Date: "June 2013", Category: "novel", Year: 2013,
+            { Title: "Joyland", Type: "Novel", Date: "June 2013", Category: "novel", Year: 2013, Ranking: 15,
               Plot: "A college student working at an amusement park investigates a murder and encounters a psychic child.",
               Facts: "Published only in paperback initially • Coming-of-age story • Set in 1973 North Carolina" },
-            { Title: "Doctor Sleep", Type: "Novel", Date: "September 24, 2013", Category: "novel", Year: 2013,
+            { Title: "Doctor Sleep", Type: "Novel", Date: "September 24, 2013", Category: "novel", Year: 2013, Ranking: 51,
               Plot: "Adult Danny Torrance battles his alcoholism while protecting a psychic girl from a cult that feeds on 'shine.'",
               Facts: "Sequel to The Shining • Explores addiction and recovery • 2019 film directed by Mike Flanagan" },
-            { Title: "Mr. Mercedes", Type: "Novel", Date: "June 2014", Category: "novel", Year: 2014,
+            { Title: "Mr. Mercedes", Type: "Novel", Date: "June 2014", Category: "novel", Year: 2014, Ranking: 57,
               Plot: "A retired detective hunts a killer who drove into a crowd of job seekers with a stolen Mercedes.",
               Facts: "First in Bill Hodges trilogy • Won Edgar Award • AT&T Audience Network series" },
-            { Title: "Revival", Type: "Novel", Date: "November 2014", Category: "novel", Year: 2014,
+            { Title: "Revival", Type: "Novel", Date: "November 2014", Category: "novel", Year: 2014, Ranking: 36,
               Plot: "A man's lifelong relationship with a minister leads to a terrifying revelation about the afterlife.",
               Facts: "Influenced by Mary Shelley's Frankenstein • Explores faith and science • King's most pessimistic ending" },
-            { Title: "Finders Keepers", Type: "Novel", Date: "June 2, 2015", Category: "novel", Year: 2015,
+            { Title: "Finders Keepers", Type: "Novel", Date: "June 2, 2015", Category: "novel", Year: 2015, Ranking: 69,
               Plot: "A teenager finds stolen money hidden by a literary obsessed killer and becomes entangled in murder.",
               Facts: "Second Bill Hodges trilogy book • Explores literary fandom • Features John Rothstein character" },
-            { Title: "End of Watch", Type: "Novel", Date: "June 7, 2016", Category: "novel", Year: 2016,
+            { Title: "End of Watch", Type: "Novel", Date: "June 7, 2016", Category: "novel", Year: 2016, Ranking: 61,
               Plot: "Detective Hodges faces his nemesis one final time as Mr. Mercedes gains psychic powers.",
               Facts: "Concludes Bill Hodges trilogy • Introduces supernatural elements • Won Goodreads Choice Award" },
-            { Title: "Sleeping Beauties", Type: "Novel", Date: "September 26, 2017", Category: "novel", Year: 2017,
+            { Title: "Sleeping Beauties", Type: "Novel", Date: "September 26, 2017", Category: "novel", Year: 2017, Ranking: 75,
               Plot: "Women around the world fall into a mysterious sleep, leaving men to maintain civilization alone.",
               Facts: "Co-written with son Owen King • Explores gender dynamics • 700+ pages long" },
-            { Title: "The Outsider", Type: "Novel", Date: "May 2018", Category: "novel", Year: 2018,
+            { Title: "The Outsider", Type: "Novel", Date: "May 2018", Category: "novel", Year: 2018, Ranking: 21,
               Plot: "A detective investigates a child murder where evidence points to an impossible suspect.",
               Facts: "Combines police procedural with supernatural horror • HBO series adaptation • Features Holly Gibney" },
-            { Title: "The Institute", Type: "Novel", Date: "September 2019", Category: "novel", Year: 2019,
+            { Title: "The Institute", Type: "Novel", Date: "September 2019", Category: "novel", Year: 2019, Ranking: 66,
               Plot: "Psychic children are held captive in a secret facility where they're trained as weapons.",
               Facts: "Explores government conspiracy • Children with telepathic/telekinetic abilities • 561 pages" },
-            { Title: "Billy Summers", Type: "Novel", Date: "August 3, 2021", Category: "novel", Year: 2021,
+            { Title: "Billy Summers", Type: "Novel", Date: "August 3, 2021", Category: "novel", Year: 2021, Ranking: 30,
               Plot: "A hitman plans his final job while writing a book about his life, but complications arise.",
               Facts: "Explores PTSD and morality • Meta-fictional elements • 528 pages long" },
-            { Title: "Later", Type: "Novel", Date: "March 2, 2021", Category: "novel", Year: 2021,
+            { Title: "Later", Type: "Novel", Date: "March 2, 2021", Category: "novel", Year: 2021, Ranking: 70,
               Plot: "A boy who can see dead people gets involved in stopping a terrorist plot from beyond the grave.",
               Facts: "Published by Hard Case Crime • Explores childhood trauma • Supernatural thriller" },
-            { Title: "Fairy Tale", Type: "Novel", Date: "September 6, 2022", Category: "novel", Year: 2022,
+            { Title: "Fairy Tale", Type: "Novel", Date: "September 6, 2022", Category: "novel", Year: 2022, Ranking: 14,
               Plot: "A teenager discovers a portal to a decaying fantasy world that he must help restore.",
               Facts: "King's return to pure fantasy • 608 pages • Inspired by classic fairy tales" },
-            { Title: "Gwendy's Final Task", Type: "Novel", Date: "February 15, 2022", Category: "novel", Year: 2022,
+            { Title: "Gwendy's Final Task", Type: "Novel", Date: "February 15, 2022", Category: "novel", Year: 2022, Ranking: 49,
               Plot: "Adult Gwendy faces a final confrontation with the mysterious button box aboard a space station.",
               Facts: "Third in Gwendy series • Co-written with Richard Chizmar • Space-based horror story" },
-            { Title: "Holly", Type: "Novel", Date: "September 5, 2023", Category: "novel", Year: 2023,
+            { Title: "Holly", Type: "Novel", Date: "September 5, 2023", Category: "novel", Year: 2023, Ranking: 53,
               Plot: "Private detective Holly Gibney investigates the disappearance of two academics and uncovers a cannibalistic cult.",
               Facts: "Features returning character Holly Gibney • King's latest published novel • Detective thriller" },
-            { Title: "Never Flinch", Type: "Novel", Date: "May 27, 2025", Category: "novel", Year: 2025,
-              Plot: "Upcoming novel - plot details not yet revealed.",
-              Facts: "King's next scheduled release • Title announced in 2024 • Details forthcoming" },
 
             // Dark Tower Series
-            { Title: "The Dark Tower: The Gunslinger", Type: "Novel", Date: "June 1982", Category: "novel", Year: 1982,
+            { Title: "The Dark Tower: The Gunslinger", Type: "Novel", Date: "June 1982", Category: "novel", Year: 1982, Ranking: 45,
               Plot: "The last gunslinger pursues the mysterious Man in Black across a post-apocalyptic wasteland.",
               Facts: "First Dark Tower book • Originally serialized in magazine • Revised and expanded in 2003" },
-            { Title: "The Dark Tower: The Drawing of the Three", Type: "Novel", Date: "May 1987", Category: "novel", Year: 1987,
+            { Title: "The Dark Tower: The Drawing of the Three", Type: "Novel", Date: "May 1987", Category: "novel", Year: 1987, Ranking: 25,
               Plot: "Roland draws three companions from modern-day New York through magical doors on a beach.",
               Facts: "Introduces Eddie, Susannah, and Jake • Time-travel elements • Connects to modern world" },
-            { Title: "The Dark Tower: The Waste Lands", Type: "Novel", Date: "August 1991", Category: "novel", Year: 1991,
+            { Title: "The Dark Tower: The Waste Lands", Type: "Novel", Date: "August 1991", Category: "novel", Year: 1991, Ranking: 24,
               Plot: "The ka-tet travels through a devastated city filled with dangerous technology and riddles.",
               Facts: "Features Blaine the Mono train • Jake's paradox resolved • Introduces Oy the billy-bumbler" },
-            { Title: "The Dark Tower: Wizard and Glass", Type: "Novel", Date: "November 1997", Category: "novel", Year: 1997,
+            { Title: "The Dark Tower: Wizard and Glass", Type: "Novel", Date: "November 1997", Category: "novel", Year: 1997, Ranking: 3,
               Plot: "Roland tells his companions about his tragic first love and the fall of Gilead.",
               Facts: "Mostly flashback story • Shows Roland as young gunslinger • Features The Wizard of Oz connections" },
-            { Title: "The Dark Tower: Wolves of the Calla", Type: "Novel", Date: "November 2003", Category: "novel", Year: 2003,
+            { Title: "The Dark Tower: Wolves of the Calla", Type: "Novel", Date: "November 2003", Category: "novel", Year: 2003, Ranking: 43,
               Plot: "The ka-tet helps a farming community defend against robotic wolves who steal children.",
               Facts: "Homage to The Magnificent Seven • Introduces Father Callahan from 'Salem's Lot • Published after 6-year gap" },
-            { Title: "The Dark Tower: Song of Susannah", Type: "Novel", Date: "June 2004", Category: "novel", Year: 2004,
+            { Title: "The Dark Tower: Song of Susannah", Type: "Novel", Date: "June 2004", Category: "novel", Year: 2004, Ranking: 64,
               Plot: "Susannah is possessed while the ka-tet splits up to pursue different missions across worlds.",
               Facts: "Stephen King appears as character • Meta-fictional elements • Sets up final confrontation" },
-            { Title: "The Dark Tower", Type: "Novel", Date: "September 2004", Category: "novel", Year: 2004,
+            { Title: "The Dark Tower", Type: "Novel", Date: "September 2004", Category: "novel", Year: 2004, Ranking: 11,
               Plot: "Roland reaches the Dark Tower in this epic conclusion to his quest spanning multiple lifetimes.",
               Facts: "Controversial ending • King himself appears in story • Completes the wheel of ka" },
-            { Title: "The Dark Tower: The Wind Through the Keyhole", Type: "Novel", Date: "April 2012", Category: "novel", Year: 2012,
+            { Title: "The Dark Tower: The Wind Through the Keyhole", Type: "Novel", Date: "April 2012", Category: "novel", Year: 2012, Ranking: 67,
               Plot: "Roland tells a story-within-a-story while the ka-tet shelters from a dangerous storm.",
               Facts: "Book 4.5 in the series • Standalone story • Returns to Mid-World after series completion" },
 
-            // Richard Bachman Books
-            { Title: "Rage", Type: "Bachman Novel", Date: "December 1976", Category: "bachman", Year: 1976,
-              Plot: "A disturbed student holds his algebra class hostage after shooting his teacher.",
-              Facts: "King's first published novel • Withdrawn from publication due to school shootings • Explores teenage alienation" },
-            { Title: "The Long Walk", Type: "Bachman Novel", Date: "December 1978", Category: "bachman", Year: 1978,
-              Plot: "100 teenage boys participate in a deadly walking contest where stopping means death.",
-              Facts: "King considers it one of his best • Written when King was 18 • Dystopian nightmare scenario" },
-            { Title: "Roadwork", Type: "Bachman Novel", Date: "December 1980", Category: "bachman", Year: 1980,
-              Plot: "A man's life falls apart when highway construction threatens his home and business.",
-              Facts: "Most realistic of Bachman books • Explores middle-class breakdown • Based on King's own experiences" },
-            { Title: "The Running Man", Type: "Bachman Novel", Date: "December 1981", Category: "bachman", Year: 1981,
-              Plot: "A desperate man joins a deadly game show where contestants are hunted for prize money.",
-              Facts: "Predicted reality TV culture • Schwarzenegger film very different from book • Written in one week" },
-            { Title: "Thinner", Type: "Bachman Novel", Date: "November 1984", Category: "bachman", Year: 1984,
-              Plot: "An overweight lawyer is cursed by a gypsy to lose weight uncontrollably.",
-              Facts: "Book that revealed Bachman's identity • King's exploration of consequences • Body horror elements" },
-            { Title: "The Regulators", Type: "Bachman Novel", Date: "December 1995", Category: "bachman", Year: 1995,
-              Plot: "Suburban neighborhood terrorized by supernatural forces controlling local children.",
-              Facts: "Mirror universe version of Desperation • Same characters, different roles • Published same day as Desperation" },
-            { Title: "Blaze", Type: "Bachman Novel", Date: "December 2006", Category: "bachman", Year: 2006,
-              Plot: "A brain-damaged man kidnaps a baby while guided by his dead partner's voice.",
-              Facts: "Found manuscript from 1970s • Heavily revised before publication • Of Mice and Men influence" },
+            // Individual Bachman Books with rankings
+            { Title: "Blaze", Type: "Novel", Date: "June 2007", Category: "bachman", Year: 2007, Ranking: 46,
+              Plot: "A mentally disabled man and his dead friend's voice plan to kidnap a baby for ransom.",
+              Facts: "Written in 1973, published posthumously as Bachman • King's tribute to Of Mice and Men • Originally called The Bachman Book" },
+            { Title: "Thinner", Type: "Novel", Date: "November 1984", Category: "bachman", Year: 1984, Ranking: 58,
+              Plot: "An obese lawyer is cursed by a Romani elder to lose weight uncontrollably after killing the man's daughter in a car accident.",
+              Facts: "Published as Richard Bachman • Led to King's pseudonym being discovered • Explores themes of guilt and consequences" },
+            { Title: "The Regulators", Type: "Novel", Date: "September 1996", Category: "bachman", Year: 1996, Ranking: 59,
+              Plot: "Residents of a suburban street face an invasion by supernatural forces controlling local children and reality itself.",
+              Facts: "Companion to Desperation • Same characters, different reality • Published simultaneously with Desperation" },
+            
+            // Additional novels
+            { Title: "Desperation", Type: "Novel", Date: "September 1996", Category: "novel", Year: 1996, Ranking: 54,
+              Plot: "Travelers in Nevada are trapped in a mining town by a possessed sheriff and an ancient evil.",
+              Facts: "Companion to The Regulators • King wrote both simultaneously • Explores good vs evil themes" },
+            
+            // Richard Bachman Books (Consolidated for other titles)
+            { Title: "Bachman Books (Collection)", Type: "Collection", Date: "1976-2006", Category: "bachman", Year: 1976, Ranking: 39,
+              Plot: "Collection of novels published under Stephen King's pseudonym Richard Bachman, including Rage, The Long Walk, Roadwork, The Running Man, Thinner, The Regulators.",
+              Facts: "Published under pseudonym to test if King's success was due to luck • Identity revealed in 1985 • Explores darker themes than King's regular work • Six novels total spanning 30 years" },
 
             // Short Story Collections
-            { Title: "Night Shift", Type: "Story Collection", Date: "February 1978", Category: "collection", Year: 1978,
+            { Title: "Night Shift", Type: "Story Collection", Date: "February 1978", Category: "collection", Year: 1978, Ranking: 13,
               Plot: "King's first short story collection featuring classics like 'Children of the Corn' and 'The Boogeyman.'",
               Facts: "20 stories total • Launched King's short fiction career • Contains many adapted stories" },
-            { Title: "Different Seasons", Type: "Story Collection", Date: "August 1982", Category: "collection", Year: 1982,
+            { Title: "Different Seasons", Type: "Story Collection", Date: "August 1982", Category: "collection", Year: 1982, Ranking: 8,
               Plot: "Four novellas including 'Rita Hayworth and Shawshank Redemption' and 'The Body.'",
               Facts: "All four stories adapted to film • Contains no supernatural elements • King's most acclaimed collection" },
-            { Title: "Skeleton Crew", Type: "Story Collection", Date: "June 1985", Category: "collection", Year: 1985,
+            { Title: "Skeleton Crew", Type: "Story Collection", Date: "June 1985", Category: "collection", Year: 1985, Ranking: 23,
               Plot: "22 stories including 'The Mist,' 'Survivor Type,' and 'The Jaunt.'",
               Facts: "Mix of horror and science fiction • Contains poem 'Paranoid' • Features story notes by King" },
-            { Title: "Four Past Midnight", Type: "Story Collection", Date: "September 1990", Category: "collection", Year: 1990,
+            { Title: "Four Past Midnight", Type: "Story Collection", Date: "September 1990", Category: "collection", Year: 1990, Ranking: 50,
               Plot: "Four novellas: 'The Langoliers,' 'Secret Window,' 'The Library Policeman,' and 'The Sun Dog.'",
               Facts: "All stories over 100 pages • Secret Window became film starring Johnny Depp • Explores time and reality" },
-            { Title: "Nightmares & Dreamscapes", Type: "Story Collection", Date: "October 1993", Category: "collection", Year: 1993,
+            { Title: "Nightmares & Dreamscapes", Type: "Story Collection", Date: "October 1993", Category: "collection", Year: 1993, Ranking: 32,
               Plot: "Collection of 24 stories ranging from horror to dark fantasy, including 'Dolan's Cadillac.'",
               Facts: "Most diverse King collection • Includes baseball story • TNT adapted several stories" },
-            { Title: "Hearts in Atlantis", Type: "Story Collection", Date: "September 1999", Category: "collection", Year: 1999,
+            { Title: "Hearts in Atlantis", Type: "Story Collection", Date: "September 1999", Category: "collection", Year: 1999, Ranking: 16,
               Plot: "Five interconnected stories about the 1960s, Vietnam War, and growing up.",
               Facts: "Connects to Dark Tower mythology • Anthony Hopkins starred in 2001 film • King's meditation on the '60s" },
-            { Title: "Everything's Eventual", Type: "Story Collection", Date: "March 2002", Category: "collection", Year: 2002,
+            { Title: "Everything's Eventual", Type: "Story Collection", Date: "March 2002", Category: "collection", Year: 2002, Ranking: 41,
               Plot: "14 stories including the Dark Tower tale 'The Little Sisters of Eluria.'",
               Facts: "First collection in 9 years • Mix of new and previously published • Dark Tower connection" },
-            { Title: "Just After Sunset", Type: "Story Collection", Date: "November 2008", Category: "collection", Year: 2008,
+            { Title: "Just After Sunset", Type: "Story Collection", Date: "November 2008", Category: "collection", Year: 2008, Ranking: 48,
               Plot: "13 stories exploring fear in everyday situations, including 'N.' and 'A Very Tight Place.'",
               Facts: "King's return to pure horror shorts • N. became online series • Explores modern anxieties" },
-            { Title: "Full Dark, No Stars", Type: "Story Collection", Date: "November 2010", Category: "collection", Year: 2010,
+            { Title: "Full Dark, No Stars", Type: "Story Collection", Date: "November 2010", Category: "collection", Year: 2010, Ranking: 28,
               Plot: "Four dark novellas about ordinary people in extraordinary circumstances.",
               Facts: "King's darkest collection • No supernatural elements • Explores human evil" },
-            { Title: "The Bazaar of Bad Dreams", Type: "Story Collection", Date: "November 2015", Category: "collection", Year: 2015,
+            { Title: "The Bazaar of Bad Dreams", Type: "Story Collection", Date: "November 2015", Category: "collection", Year: 2015, Ranking: 56,
               Plot: "20 stories with King's personal notes, ranging from horror to touching human drama.",
               Facts: "Each story has author's note • Mix of genres • Mile 81 connects to Dark Tower" },
-            { Title: "If It Bleeds", Type: "Story Collection", Date: "April 2020", Category: "collection", Year: 2020,
+            { Title: "If It Bleeds", Type: "Story Collection", Date: "April 2020", Category: "collection", Year: 2020, Ranking: 72,
               Plot: "Four novellas including the title story featuring Holly Gibney investigating supernatural murders.",
               Facts: "Features Holly Gibney • Published during COVID pandemic • Mr. Harrigan's Phone adapted by Netflix" },
-            { Title: "You Like It Darker", Type: "Story Collection", Date: "May 2024", Category: "collection", Year: 2024,
+            { Title: "You Like It Darker", Type: "Story Collection", Date: "May 2024", Category: "collection", Year: 2024, Ranking: 26,
               Plot: "King's latest collection of 12 stories exploring the darkness that lurks in ordinary life.",
               Facts: "King's newest collection • Mix of horror and literary fiction • Published at age 76" },
 
             // Novellas (standalone)
-            { Title: "Cycle of the Werewolf", Type: "Novel", Date: "April 1985", Category: "novel", Year: 1985,
+            { Title: "Cycle of the Werewolf", Type: "Novel", Date: "April 1985", Category: "novel", Year: 1985, Ranking: 71,
               Plot: "A small town is terrorized by werewolf attacks during each month of the year.",
               Facts: "Originally calendar project • Illustrated by Bernie Wrightson • Adapted as Silver Bullet film" },
-            { Title: "The Green Mile: The Complete Serial Novel", Type: "Novel", Date: "October 2000", Category: "novel", Year: 2000,
+            { Title: "The Green Mile: The Complete Serial Novel", Type: "Novel", Date: "October 2000", Category: "novel", Year: 2000, Ranking: 10,
               Plot: "Death row guards encounter John Coffey, a gentle giant with miraculous healing powers.",
               Facts: "Originally published in 6 parts • Tom Hanks starred in 1999 film • King's experiment in serial fiction" },
-            { Title: "Blockade Billy", Type: "Novella", Date: "April 20, 2010", Category: "novella", Year: 2010,
-              Plot: "An elderly man recounts the story of a mysterious baseball player from 1957.",
-              Facts: "Baseball-themed horror • Published as standalone • Later included in collection" },
-            { Title: "Elevation", Type: "Novella", Date: "October 30, 2018", Category: "novella", Year: 2018,
+            { Title: "Elevation", Type: "Novella", Date: "October 30, 2018", Category: "novella", Year: 2018, Ranking: 62,
               Plot: "A man begins losing weight while maintaining his physical appearance, leading to unexpected consequences.",
               Facts: "King's exploration of prejudice • LGBTQ themes • No supernatural horror elements" },
-            { Title: "Gwendy's Button Box", Type: "Novella", Date: "May 16, 2017", Category: "novella", Year: 2017,
+            { Title: "Gwendy's Button Box", Type: "Novella", Date: "May 16, 2017", Category: "novella", Year: 2017, Ranking: 68,
               Plot: "A young girl receives a mysterious box with buttons that can grant wishes and cause disasters.",
               Facts: "Co-written with Richard Chizmar • First in Gwendy trilogy • Connects to Dark Tower mythology" },
 
             // Non-Fiction
-            { Title: "Danse Macabre", Type: "Nonfiction", Date: "December 1980", Category: "nonfiction", Year: 1980,
+            { Title: "Danse Macabre", Type: "Nonfiction", Date: "December 1980", Category: "nonfiction", Year: 1980, Ranking: 52,
               Plot: "King's analysis of horror in film and literature from 1950-1980.",
               Facts: "King's first non-fiction book • Essential horror criticism • Explores what scares us and why" },
-            { Title: "Nightmares in the Sky", Type: "Nonfiction", Date: "December 1987", Category: "nonfiction", Year: 1987,
-              Plot: "Photo book featuring gargoyles with King's accompanying text about these stone guardians.",
-              Facts: "Coffee table book • Collaboration with photographer • King's fascination with Gothic architecture" },
-            { Title: "Mid-Life Confidential", Type: "Nonfiction", Date: "December 1993", Category: "nonfiction", Year: 1993,
-              Plot: "Tour diary of the Rock Bottom Remainders, a band of famous authors including King.",
-              Facts: "Co-authored with Dave Barry and others • Rock and roll adventure • Authors behaving badly" },
-            { Title: "On Writing: A Memoir of the Craft", Type: "Nonfiction", Date: "December 1999", Category: "nonfiction", Year: 1999,
+            { Title: "On Writing: A Memoir of the Craft", Type: "Nonfiction", Date: "December 1999", Category: "nonfiction", Year: 1999, Ranking: 12,
               Plot: "Half memoir, half master class on the craft of writing from one of America's most successful authors.",
               Facts: "King's most acclaimed non-fiction • Essential for writers • Written after van accident" },
-            { Title: "Faithful", Type: "Nonfiction", Date: "September 2005", Category: "nonfiction", Year: 2005,
+            { Title: "Faithful", Type: "Nonfiction", Date: "September 2005", Category: "nonfiction", Year: 2005, Ranking: 77,
               Plot: "King and Stewart O'Nan chronicle the Boston Red Sox's historic 2004 World Series championship season.",
               Facts: "Co-written with Stewart O'Nan • For Red Sox fans • Documents curse-breaking season" },
-            { Title: "GUNS", Type: "Nonfiction", Date: "January 2013", Category: "nonfiction", Year: 2013,
-              Plot: "King's essay on gun violence in America following the Sandy Hook Elementary School shooting.",
-              Facts: "Political essay on gun control • Response to mass shooting • Controversial political stance" }
         ];
 
         let filteredBooks = [...stephenKingBooks];
@@ -634,7 +680,10 @@
                     <div class="book-title">${book.Title}</div>
                     <div class="book-meta">
                         <span>${book.Date}</span>
-                        <span class="book-type">${book.Type}</span>
+                        <div>
+                            <span class="book-type">${book.Type}</span>
+                            ${book.Ranking ? `<span class="book-ranking">#${book.Ranking}</span>` : ''}
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -722,7 +771,7 @@
                 
                 setTimeout(() => {
                     btn.textContent = originalText;
-                    btn.style.background = 'linear-gradient(45deg, #4ecdc4, #44a08d)';
+                    btn.style.background = 'linear-gradient(45deg, #8b0000, #dc143c)';
                 }, 2000);
                 
             } catch (error) {

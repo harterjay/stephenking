@@ -7,7 +7,10 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(git mv:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []

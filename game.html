@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stephen King Ranking Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Crimson Text', 'Georgia', 'Times New Roman', serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e8e8e8;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(40, 40, 40, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(200, 50, 50, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: #c9302c;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: #c9302c;
+            font-weight: bold;
+        }
+        
+        .game-area {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: stretch;
+            margin: 40px 0;
+            min-height: 300px;
+        }
+        
+        .book-option {
+            flex: 1;
+            max-width: 400px;
+            background: rgba(50, 50, 50, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(100, 100, 100, 0.3);
+            text-align: center;
+        }
+        
+        .book-option:hover {
+            background: rgba(200, 50, 50, 0.1);
+            border-color: rgba(200, 50, 50, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .book-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .book-details {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .book-plot {
+            font-size: 0.9em;
+            opacity: 0.8;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+        
+        .vs-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #c9302c;
+            min-width: 60px;
+        }
+        
+        .game-over {
+            text-align: center;
+            padding: 40px;
+            background: rgba(201, 48, 44, 0.1);
+            border-radius: 15px;
+            border: 2px solid rgba(201, 48, 44, 0.3);
+            margin: 20px 0;
+        }
+        
+        .game-over h2 {
+            color: #c9302c;
+            margin-bottom: 20px;
+        }
+        
+        .final-score {
+            font-size: 2em;
+            color: #c9302c;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #a94442, #c9302c);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .instructions {
+            background: rgba(200, 50, 50, 0.1);
+            border-left: 4px solid #c9302c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .game-area {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .vs-divider {
+                transform: rotate(90deg);
+                min-height: 60px;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Stephen King Ranking Game</h1>
+        <div class="subtitle">Test your knowledge of Esquire's rankings!</div>
+        
+        <div class="score">
+            Score: <span id="currentScore">0</span>
+        </div>
+        
+        <div class="instructions">
+            <strong>How to Play:</strong> You'll see two Stephen King books. Click on the one that was ranked <strong>higher</strong> in Esquire's list. 
+            Higher ranking = lower number (e.g., #1 beats #5). Get it right to earn a point and continue. Get it wrong and the game ends!
+        </div>
+        
+        <div id="gameArea" class="game-area">
+            <!-- Game content will be populated here -->
+        </div>
+        
+        <div id="gameOverScreen" class="game-over hidden">
+            <h2>Game Over!</h2>
+            <div class="final-score" id="finalScore">Your Score: 0</div>
+            <p id="gameOverMessage">Better luck next time!</p>
+            <div class="action-buttons">
+                <button class="btn" onclick="startNewGame()">Play Again</button>
+                <button class="btn" onclick="window.location.href='index.html'">Back to Library</button>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn" onclick="window.location.href='index.html'">← Back to Library</button>
+        </div>
+    </div>
+
+    <script>
+        // Complete book data with rankings (all 77 from Esquire list)
+        const rankedBooks = [
+            { Title: "IT", Ranking: 1, Type: "Novel", Date: "September 1986", Plot: "Seven children face an ancient evil that preys on the town of Derry every 27 years." },
+            { Title: "The Stand", Ranking: 2, Type: "Novel", Date: "October 1978", Plot: "After a plague wipes out most of humanity, survivors gather to face a final battle between good and evil." },
+            { Title: "The Dark Tower: Wizard and Glass", Ranking: 3, Type: "Novel", Date: "November 1997", Plot: "Roland tells his companions about his tragic first love and the fall of Gilead." },
+            { Title: "11/22/63", Ranking: 4, Type: "Novel", Date: "November 8, 2011", Plot: "A teacher travels back in time to prevent JFK's assassination but discovers changing history has consequences." },
+            { Title: "The Shining", Ranking: 5, Type: "Novel", Date: "January 1977", Plot: "A family becomes winter caretakers of an isolated hotel where supernatural forces drive the father toward madness." },
+            { Title: "Misery", Ranking: 6, Type: "Novel", Date: "June 1987", Plot: "A writer is held captive by his 'number one fan' who forces him to write a novel to her specifications." },
+            { Title: "The Talisman", Ranking: 7, Type: "Novel", Date: "November 1984", Plot: "A 12-year-old boy journeys across America and a parallel world to save his dying mother." },
+            { Title: "Different Seasons", Ranking: 8, Type: "Story Collection", Date: "August 1982", Plot: "Four novellas including 'Rita Hayworth and Shawshank Redemption' and 'The Body.'" },
+            { Title: "From A Buick 8", Ranking: 9, Type: "Novel", Date: "September 24, 2002", Plot: "State troopers guard a mysterious car that serves as a portal to another dimension." },
+            { Title: "The Green Mile: The Complete Serial Novel", Ranking: 10, Type: "Novel", Date: "October 2000", Plot: "Death row guards encounter John Coffey, a gentle giant with miraculous healing powers." },
+            { Title: "The Dark Tower", Ranking: 11, Type: "Novel", Date: "September 2004", Plot: "Roland reaches the Dark Tower in this epic conclusion to his quest spanning multiple lifetimes." },
+            { Title: "On Writing: A Memoir of the Craft", Ranking: 12, Type: "Nonfiction", Date: "December 1999", Plot: "Half memoir, half master class on the craft of writing from one of America's most successful authors." },
+            { Title: "Night Shift", Ranking: 13, Type: "Story Collection", Date: "February 1978", Plot: "King's first short story collection featuring classics like 'Children of the Corn' and 'The Boogeyman.'" },
+            { Title: "Fairy Tale", Ranking: 14, Type: "Novel", Date: "September 6, 2022", Plot: "A teenager discovers a portal to a decaying fantasy world that he must help restore." },
+            { Title: "Joyland", Ranking: 15, Type: "Novel", Date: "June 2013", Plot: "A college student working at an amusement park investigates a murder and encounters a psychic child." },
+            { Title: "Hearts in Atlantis", Ranking: 16, Type: "Story Collection", Date: "September 1999", Plot: "Five interconnected stories about the 1960s, Vietnam War, and growing up." },
+            { Title: "Duma Key", Ranking: 17, Type: "Novel", Date: "January 22, 2008", Plot: "An artist recovering from an accident discovers his paintings have supernatural power on a Florida island." },
+            { Title: "'Salem's Lot", Ranking: 18, Type: "Novel", Date: "October 17, 1975", Plot: "Vampires invade a small Maine town, turning residents into undead creatures." },
+            { Title: "Under the Dome", Ranking: 19, Type: "Novel", Date: "November 2009", Plot: "A small town becomes trapped under an invisible dome, revealing the corruption and violence within." },
+            { Title: "Dolores Claiborne", Ranking: 20, Type: "Novel", Date: "November 1993", Plot: "A housekeeper confesses to murder while revealing the truth about her abusive marriage and her employer's death." },
+            { Title: "The Outsider", Ranking: 21, Type: "Novel", Date: "May 2018", Plot: "A detective investigates a child murder where evidence points to an impossible suspect." },
+            { Title: "Cujo", Ranking: 22, Type: "Novel", Date: "September 8, 1981", Plot: "A rabid St. Bernard traps a mother and son in their car during a sweltering summer." },
+            { Title: "Skeleton Crew", Ranking: 23, Type: "Story Collection", Date: "June 1985", Plot: "22 stories including 'The Mist,' 'Survivor Type,' and 'The Jaunt.'" },
+            { Title: "The Dark Tower: The Waste Lands", Ranking: 24, Type: "Novel", Date: "August 1991", Plot: "The ka-tet travels through a devastated city filled with dangerous technology and riddles." },
+            { Title: "The Dark Tower: The Drawing of the Three", Ranking: 25, Type: "Novel", Date: "May 1987", Plot: "Roland draws three companions from modern-day New York through magical doors on a beach." },
+            { Title: "You Like It Darker", Ranking: 26, Type: "Story Collection", Date: "May 2024", Plot: "King's latest collection of 12 stories exploring the darkness that lurks in ordinary life." },
+            { Title: "Pet Sematary", Ranking: 27, Type: "Novel", Date: "November 1983", Plot: "A family discovers an ancient burial ground where the dead return to life, but they come back wrong." },
+            { Title: "Full Dark, No Stars", Ranking: 28, Type: "Story Collection", Date: "November 2010", Plot: "Four dark novellas about ordinary people in extraordinary circumstances." },
+            { Title: "Needful Things", Ranking: 29, Type: "Novel", Date: "October 1991", Plot: "A mysterious shop owner grants people's deepest desires in exchange for small favors that turn the town against itself." },
+            { Title: "Billy Summers", Ranking: 30, Type: "Novel", Date: "August 3, 2021", Plot: "A hitman plans his final job while writing a book about his life, but complications arise." },
+            { Title: "Bag of Bones", Ranking: 31, Type: "Novel", Date: "September 22, 1998", Plot: "A widowed novelist returns to his lake house where he encounters ghosts and uncovers a town's dark secrets." },
+            { Title: "Nightmares & Dreamscapes", Ranking: 32, Type: "Story Collection", Date: "October 1993", Plot: "Collection of 24 stories ranging from horror to dark fantasy, including 'Dolan's Cadillac.'" },
+            { Title: "Carrie", Ranking: 33, Type: "Novel", Date: "April 5, 1974", Plot: "A telekinetic teenager faces high school bullying and religious extremism, leading to a devastating prom night." },
+            { Title: "Lisey's Story", Ranking: 34, Type: "Novel", Date: "October 2006", Plot: "A widow discovers her late husband's supernatural secret world while sorting through his belongings." },
+            { Title: "The Dead Zone", Ranking: 35, Type: "Novel", Date: "August 1979", Plot: "A man awakens from a coma with psychic abilities that allow him to see the future through touch." },
+            { Title: "Revival", Ranking: 36, Type: "Novel", Date: "November 2014", Plot: "A man's lifelong relationship with a minister leads to a terrifying revelation about the afterlife." },
+            { Title: "Rose Madder", Ranking: 37, Type: "Novel", Date: "June 1995", Plot: "A battered wife escapes her abusive police officer husband and finds refuge through a magical painting." },
+            { Title: "Gerald's Game", Ranking: 38, Type: "Novel", Date: "May 1992", Plot: "A woman becomes trapped by handcuffs during an intimate game gone wrong and must survive using only her wits." },
+            { Title: "Bachman Books", Ranking: 39, Type: "Collection", Date: "1976-2006", Plot: "Collection of novels published under Stephen King's pseudonym Richard Bachman, including Rage, The Long Walk, Roadwork, The Running Man, Thinner, The Regulators, and Blaze." },
+            { Title: "The Girl Who Loved Tom Gordon", Ranking: 40, Type: "Novel", Date: "April 1999", Plot: "A nine-year-old girl becomes lost in the woods and imagines her baseball hero helping her survive." },
+            { Title: "Everything's Eventual", Ranking: 41, Type: "Story Collection", Date: "March 2002", Plot: "14 stories including the Dark Tower tale 'The Little Sisters of Eluria.'" },
+            { Title: "The Dark Half", Ranking: 42, Type: "Novel", Date: "November 1989", Plot: "A writer's violent pseudonym comes to life and begins killing people who threaten to expose the secret." },
+            { Title: "The Dark Tower: Wolves of the Calla", Ranking: 43, Type: "Novel", Date: "November 2003", Plot: "The ka-tet helps a farming community defend against robotic wolves who steal children." },
+            { Title: "Insomnia", Ranking: 44, Type: "Novel", Date: "September 1994", Plot: "An elderly man's chronic insomnia reveals a supernatural battle between forces of good and evil." },
+            { Title: "The Dark Tower: The Gunslinger", Ranking: 45, Type: "Novel", Date: "June 1982", Plot: "The last gunslinger pursues the mysterious Man in Black across a post-apocalyptic wasteland." },
+            { Title: "Blaze", Ranking: 46, Type: "Bachman Novel", Date: "December 2006", Plot: "A brain-damaged man kidnaps a baby while guided by his dead partner's voice." },
+            { Title: "Firestarter", Ranking: 47, Type: "Novel", Date: "September 29, 1980", Plot: "A young girl with pyrokinetic abilities is hunted by a government agency that wants to weaponize her powers." },
+            { Title: "Just After Sunset", Ranking: 48, Type: "Story Collection", Date: "November 2008", Plot: "13 stories exploring fear in everyday situations, including 'N.' and 'A Very Tight Place.'" },
+            { Title: "Gwendy's Final Task", Ranking: 49, Type: "Novel", Date: "February 15, 2022", Plot: "Adult Gwendy faces a final confrontation with the mysterious button box aboard a space station." },
+            { Title: "Four Past Midnight", Ranking: 50, Type: "Story Collection", Date: "September 1990", Plot: "Four novellas: 'The Langoliers,' 'Secret Window,' 'The Library Policeman,' and 'The Sun Dog.'" },
+            { Title: "Doctor Sleep", Ranking: 51, Type: "Novel", Date: "September 24, 2013", Plot: "Adult Danny Torrance battles his alcoholism while protecting a psychic girl from a cult that feeds on 'shine.'" },
+            { Title: "Danse Macabre", Ranking: 52, Type: "Nonfiction", Date: "December 1980", Plot: "King's analysis of horror in film and literature from 1950-1980." },
+            { Title: "Holly", Ranking: 53, Type: "Novel", Date: "September 5, 2023", Plot: "Private detective Holly Gibney investigates the disappearance of two academics and uncovers a cannibalistic cult." },
+            { Title: "Desperation", Ranking: 54, Type: "Novel", Date: "September 1996", Plot: "Travelers in Nevada are trapped in a mining town by a possessed sheriff and an ancient evil." },
+            { Title: "The Eyes of the Dragon", Ranking: 55, Type: "Novel", Date: "February 1987", Plot: "A young prince must escape from prison to reclaim his throne in a medieval fantasy setting." },
+            { Title: "The Bazaar of Bad Dreams", Ranking: 56, Type: "Story Collection", Date: "November 2015", Plot: "20 stories with King's personal notes, ranging from horror to touching human drama." },
+            { Title: "Mr. Mercedes", Ranking: 57, Type: "Novel", Date: "June 2014", Plot: "A retired detective hunts a killer who drove into a crowd of job seekers with a stolen Mercedes." },
+            { Title: "Thinner", Ranking: 58, Type: "Bachman Novel", Date: "November 1984", Plot: "An overweight lawyer is cursed by a gypsy to lose weight uncontrollably." },
+            { Title: "The Regulators", Ranking: 59, Type: "Bachman Novel", Date: "December 1995", Plot: "Suburban neighborhood terrorized by supernatural forces controlling local children." },
+            { Title: "The Tommyknockers", Ranking: 60, Type: "Novel", Date: "November 1987", Plot: "Residents of a small town are transformed by an alien presence buried in the forest." },
+            { Title: "End of Watch", Ranking: 61, Type: "Novel", Date: "June 7, 2016", Plot: "Detective Hodges faces his nemesis one final time as Mr. Mercedes gains psychic powers." },
+            { Title: "Elevation", Ranking: 62, Type: "Novella", Date: "October 30, 2018", Plot: "A man begins losing weight while maintaining his physical appearance, leading to unexpected consequences." },
+            { Title: "Christine", Ranking: 63, Type: "Novel", Date: "April 29, 1983", Plot: "A 1958 Plymouth Fury develops a murderous obsession with its teenage owner." },
+            { Title: "The Dark Tower: Song of Susannah", Ranking: 64, Type: "Novel", Date: "June 2004", Plot: "Susannah is possessed while the ka-tet splits up to pursue different missions across worlds." },
+            { Title: "Black House", Ranking: 65, Type: "Novel", Date: "September 15, 2001", Plot: "Retired detective Jack Sawyer returns to investigate child murders connected to The Dark Tower." },
+            { Title: "The Institute", Ranking: 66, Type: "Novel", Date: "September 2019", Plot: "Psychic children are held captive in a secret facility where they're trained as weapons." },
+            { Title: "The Dark Tower: The Wind Through the Keyhole", Ranking: 67, Type: "Novel", Date: "April 2012", Plot: "Roland tells a story-within-a-story while the ka-tet shelters from a dangerous storm." },
+            { Title: "Gwendy's Button Box", Ranking: 68, Type: "Novella", Date: "May 16, 2017", Plot: "A young girl receives a mysterious box with buttons that can grant wishes and cause disasters." },
+            { Title: "Finders Keepers", Ranking: 69, Type: "Novel", Date: "June 2, 2015", Plot: "A teenager finds stolen money hidden by a literary obsessed killer and becomes entangled in murder." },
+            { Title: "Later", Ranking: 70, Type: "Novel", Date: "March 2, 2021", Plot: "A boy who can see dead people gets involved in stopping a terrorist plot from beyond the grave." },
+            { Title: "Cycle of the Werewolf", Ranking: 71, Type: "Novel", Date: "April 1985", Plot: "A small town is terrorized by werewolf attacks during each month of the year." },
+            { Title: "If It Bleeds", Ranking: 72, Type: "Story Collection", Date: "April 2020", Plot: "Four novellas including the title story featuring Holly Gibney investigating supernatural murders." },
+            { Title: "Dreamcatcher", Ranking: 73, Type: "Novel", Date: "February 20, 2001", Plot: "Four friends with psychic abilities battle an alien invasion in the Maine woods." },
+            { Title: "Cell", Ranking: 74, Type: "Novel", Date: "January 24, 2006", Plot: "A mysterious cell phone signal turns users into zombie-like creatures, sparking an apocalypse." },
+            { Title: "Sleeping Beauties", Ranking: 75, Type: "Novel", Date: "September 26, 2017", Plot: "Women around the world fall into a mysterious sleep, leaving men to maintain civilization alone." },
+            { Title: "The Colorado Kid", Ranking: 76, Type: "Novel", Date: "October 2005", Plot: "Two newspapermen tell a young reporter about an unsolved mystery involving a dead man on a beach." },
+            { Title: "Faithful", Ranking: 77, Type: "Nonfiction", Date: "September 2005", Plot: "King and Stewart O'Nan chronicle the Boston Red Sox's historic 2004 World Series championship season." }
+        ];
+
+        let currentScore = 0;
+        let currentBooks = [];
+        let gameActive = false;
+
+        function getRandomBooks() {
+            const shuffled = [...rankedBooks];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return [shuffled[0], shuffled[1]];
+        }
+
+        function startNewGame() {
+            currentScore = 0;
+            gameActive = true;
+            document.getElementById('currentScore').textContent = currentScore;
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            nextRound();
+        }
+
+        function nextRound() {
+            if (!gameActive) return;
+            
+            currentBooks = getRandomBooks();
+            displayBooks();
+        }
+
+        function displayBooks() {
+            const gameArea = document.getElementById('gameArea');
+            gameArea.innerHTML = `
+                <div class="book-option" onclick="selectBook(0)">
+                    <div class="book-title">${currentBooks[0].Title}</div>
+                    <div class="book-details">${currentBooks[0].Type} • ${currentBooks[0].Date}</div>
+                    <div class="book-plot">${currentBooks[0].Plot}</div>
+                    <div style="margin-top: 20px; font-weight: bold; color: #c9302c;">Click if this was ranked HIGHER</div>
+                </div>
+                <div class="vs-divider">VS</div>
+                <div class="book-option" onclick="selectBook(1)">
+                    <div class="book-title">${currentBooks[1].Title}</div>
+                    <div class="book-details">${currentBooks[1].Type} • ${currentBooks[1].Date}</div>
+                    <div class="book-plot">${currentBooks[1].Plot}</div>
+                    <div style="margin-top: 20px; font-weight: bold; color: #c9302c;">Click if this was ranked HIGHER</div>
+                </div>
+            `;
+        }
+
+        function selectBook(index) {
+            if (!gameActive) return;
+            
+            const selectedBook = currentBooks[index];
+            const otherBook = currentBooks[1 - index];
+            
+            // Check if the selected book has a higher ranking (lower number)
+            if (selectedBook.Ranking < otherBook.Ranking) {
+                // Correct answer
+                currentScore++;
+                document.getElementById('currentScore').textContent = currentScore;
+                showFeedback(true, selectedBook, otherBook);
+            } else {
+                // Wrong answer - game over
+                gameActive = false;
+                showFeedback(false, selectedBook, otherBook);
+            }
+        }
+
+        function showFeedback(correct, selectedBook, otherBook) {
+            const gameArea = document.getElementById('gameArea');
+            const correctBook = selectedBook.Ranking < otherBook.Ranking ? selectedBook : otherBook;
+            const wrongBook = selectedBook.Ranking < otherBook.Ranking ? otherBook : selectedBook;
+            
+            if (correct) {
+                gameArea.innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: rgba(46, 125, 50, 0.2); border-radius: 15px; border: 2px solid rgba(76, 175, 80, 0.5);">
+                        <h2 style="color: #4caf50; margin-bottom: 20px;">✅ Correct!</h2>
+                        <p><strong>"${correctBook.Title}"</strong> was ranked #${correctBook.Ranking}</p>
+                        <p><strong>"${wrongBook.Title}"</strong> was ranked #${wrongBook.Ranking}</p>
+                        <p style="margin-top: 20px; font-size: 1.1em; color: #4caf50;">Score: ${currentScore}</p>
+                        <div style="margin-top: 30px;">
+                            <button class="btn" onclick="nextRound()">Keep Playing</button>
+                            <button class="btn" onclick="window.location.href='index.html'">Back to Catalog</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                gameArea.innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: rgba(244, 67, 54, 0.2); border-radius: 15px; border: 2px solid rgba(244, 67, 54, 0.5);">
+                        <h2 style="color: #f44336; margin-bottom: 20px;">❌ Wrong!</h2>
+                        <p>You chose <strong>"${selectedBook.Title}"</strong> (ranked #${selectedBook.Ranking})</p>
+                        <p>But <strong>"${otherBook.Title}"</strong> was ranked higher at #${otherBook.Ranking}</p>
+                        <p style="margin-top: 20px; font-size: 1.1em;">Final Score: ${currentScore}</p>
+                        <div style="margin-top: 30px;">
+                            <button class="btn" onclick="startNewGame()">Play Again</button>
+                            <button class="btn" onclick="window.location.href='index.html'">Back to Catalog</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function endGame() {
+            document.getElementById('finalScore').textContent = `Your Score: ${currentScore}`;
+            
+            let message = "";
+            if (currentScore === 0) {
+                message = "Keep reading! Even Stephen King fans can struggle with rankings.";
+            } else if (currentScore < 5) {
+                message = "Not bad! You know some King classics.";
+            } else if (currentScore < 10) {
+                message = "Impressive! You're a true Stephen King fan.";
+            } else if (currentScore < 15) {
+                message = "Outstanding! You really know your King rankings.";
+            } else {
+                message = "LEGENDARY! You're a Stephen King master!";
+            }
+            
+            document.getElementById('gameOverMessage').textContent = message;
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+        }
+
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            startNewGame();
+        });
+    </script>
+</body>
+</html>
